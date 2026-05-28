@@ -3,5 +3,5 @@ from database.db_manager import DatabaseManager
 
 db =DatabaseManager()
 
-app = QuizApp()
+app = QuizApp(db)
 app.mainloop()

@@ -16,3 +16,24 @@ class DatabaseManager:
         """)
 
         self.connection.commit()
+    def create_user(self, username, password):
+        try:
+            self.cursor.execute("""
+                INSERT INTO users (username, password)
+                VALUE (?, ?)
+            """, (username, password))
+            self.connection.commit()
+            return True
+
+        except sqlite3.IntegrityError:
+            return False
+
+    def validate_user(self, username, password):
+        self.cursor.execute("""
+            SELECT * FROM users
+            WHERE username = ? AND password = ?
+        """, (username, password))
+
+        user = self.cursor.fetchone()
+
+        return user is not None

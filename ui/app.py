@@ -2,8 +2,9 @@ import customtkinter as ctk
 
 class QuizApp(ctk.CTk):
 
-    def __init__(self):
+    def __init__(self, db):
         super().__init__()
+        self.db = db
         self.resizable(False, False)
         self.title("Quiz Game")
         self.geometry("900x600")
@@ -76,7 +77,8 @@ class QuizApp(ctk.CTk):
         self.signup_button = ctk.CTkButton(
             self.login_frame,
             text="Sign Up",
-            width=200
+            width=200,
+            command=self.signup
         )
         self.signup_button.pack()
 
@@ -93,17 +95,46 @@ class QuizApp(ctk.CTk):
         username = self.username_entry.get()
         password = self.password_entry.get()
 
+        valid = self.db.validate_user(username, password)
+
+        if valid:
+            self.message_label.configure(
+                text="login Successful",
+                text_color="green"
+            )
+
+        else:
+            self.message_label.configure(
+                text="Invalid username or password.",
+                text_color="red"
+            )
+
+
+    def signup(self):
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+
         if len(username) < 3:
             self.message_label.configure(
-                text="Username cannot be empty. Enter minimum 3 character"
+                text="Username must contain at least 3 characters."
             )
             return
 
         if len(password) < 6:
             self.message_label.configure(
-                text="Password cannot be empty. Enter minimum 6 character"
+                text="Password must contain at least 6 characters."
             )
             return
 
-        print("Username: ", username)
-        print("Password: ", password)
+        success = self.db.create_user(username, password)
+
+        if success:
+            self.message_label.configure(
+                text="Account created successfully!",
+                text_color="green"
+            )
+        else:
+            self.message_label.configure(
+                text="Username already exists.",
+                text_color="red"
+            )
