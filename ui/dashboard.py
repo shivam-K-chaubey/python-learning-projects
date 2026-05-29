@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from ui.quiz_settings import QuizSettings
 
 class DashboardFrame(ctk.CTkFrame):
     def __init__(self,parent):
@@ -18,7 +19,11 @@ class DashboardFrame(ctk.CTkFrame):
             self,
             text="Start Quiz",
             width=200,
-            height=50
+            height=50,
+            command=self.open_quiz_settings
         )
 
         self.start_button.pack(pady=20)
+    def open_quiz_settings(self):
+        self.destroy()
+        QuizSettings(self.master)

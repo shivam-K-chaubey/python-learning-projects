@@ -8,7 +8,7 @@ class QuizApp(ctk.CTk):
         self.db = db
         self.resizable(False, False)
         self.title("Quiz Game")
-        self.geometry("900x600")
+        self.geometry("900x900")
 
         #Setting the theme
         ctk.set_appearance_mode("dark")
