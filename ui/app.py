@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from ui.dashboard import DashboardFrame
 
 class QuizApp(ctk.CTk):
 
@@ -98,10 +99,7 @@ class QuizApp(ctk.CTk):
         valid = self.db.validate_user(username, password)
 
         if valid:
-            self.message_label.configure(
-                text="login Successful",
-                text_color="green"
-            )
+            self.open_dashboard()
 
         else:
             self.message_label.configure(
@@ -138,3 +136,7 @@ class QuizApp(ctk.CTk):
                 text="Username already exists.",
                 text_color="red"
             )
+
+    def open_dashboard(self):
+        self.login_frame.destroy()
+        dashboard = DashboardFrame(self)

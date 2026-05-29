@@ -16,13 +16,16 @@ class DatabaseManager:
         """)
 
         self.connection.commit()
+
     def create_user(self, username, password):
         try:
             self.cursor.execute("""
                 INSERT INTO users (username, password)
-                VALUE (?, ?)
+                VALUES (?, ?)
             """, (username, password))
+
             self.connection.commit()
+
             return True
 
         except sqlite3.IntegrityError:
@@ -37,3 +40,4 @@ class DatabaseManager:
         user = self.cursor.fetchone()
 
         return user is not None
+
