@@ -1,4 +1,7 @@
 import customtkinter as ctk
+from api.quiz_api import QuizAPI
+from models.questions import Question
+from ui.quiz_screen import QuizScreen
 
 class QuizSettings(ctk.CTkFrame):
     def __init__(self, parent):
@@ -63,20 +66,20 @@ class QuizSettings(ctk.CTkFrame):
 
         self.type_menu.pack(pady=10)
 
-        self.questions_label = ctk.CTkLabel(
+        self.amount_label = ctk.CTkLabel(
             self.settings_frame,
             text="Number of Questions"
         )
 
-        self.questions_label.pack(pady=(10, 5))
+        self.amount_label.pack(pady=(10, 5))
 
-        self.questions_menu = ctk.CTkOptionMenu(
+        self.amount_menu = ctk.CTkOptionMenu(
             self.settings_frame,
             values=["5", "10", "15", "20"],
             width=250
         )
 
-        self.questions_menu.pack(pady=10)
+        self.amount_menu.pack(pady=10)
 
         self.start_quiz_button = ctk.CTkButton(
             self.settings_frame,
@@ -90,12 +93,22 @@ class QuizSettings(ctk.CTkFrame):
         category = self.category_menu.get()
         difficulty = self.difficulty_menu.get()
         question_type = self.type_menu.get()
-        questions = int(self.questions_menu.get())
+        amount = int(self.amount_menu.get())
 
-        print(category)
-        print(difficulty)
-        print(question_type)
-        print(questions)
+        api = QuizAPI()
 
+        questions = api.get_questions(amount)
+        question_bank = []
+        for question in questions:
+            q = Question(
+                text=question["question"],
+                correct_answer=question["correct_answer"],
+                incorrect_answers=question["incorrect_answers"]
+            )
+            question_bank.append(q)
 
-
+        self.destroy()
+        QuizScreen(
+            self.master,
+            question_bank,
+        )
