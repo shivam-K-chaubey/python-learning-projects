@@ -60,7 +60,9 @@ class QuizScreen(ctk.CTkFrame):
         question = self.question_bank[
             self.current_question_index
         ]
-
+        self.question_number_label.configure(
+            text= f"Question {self.current_question_index + 1}/10"
+        )
         self.question_label.configure(
             text=question.text
         )
@@ -89,6 +91,7 @@ class QuizScreen(ctk.CTkFrame):
             self.score_label.configure(
                 text=f"Score: {self.score}"
             )
+        self.next_question()
 
     def next_question(self):
         self.current_question_index += 1
@@ -96,3 +99,7 @@ class QuizScreen(ctk.CTkFrame):
             self.question_label.configure(
                 text="Quiz Completed!"
             )
+            for button in self.answer_button:
+                button.configure(state = "Disable")
+        else:
+            self.load_question()
