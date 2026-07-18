@@ -4,30 +4,33 @@ screen = turtle.Screen()
 screen.setup(600, 500)
 
 tim = turtle.Turtle()
-def move_upwards():
-    tim.setheading(90)
-    tim.forward(25)
-def move_downwards():
-    tim.setheading(270)
-    tim.forward(25)
 
-def move_left():
-    tim.setheading(180)
-    tim.forward(25)
+def move_forwards():
+    #Move tim forwards by 5 units
+    tim.forward(10)
 
-def move_right():
-    tim.setheading(0)
-    tim.forward(25)
+def move_backwards():
+    #Move tim backwards by 5 unit
+    tim.backward(10)
+
+def turn_left():
+    new_angle = tim.heading() + 10
+    tim.setheading(new_angle)
+
+def turn_right():
+    new_angle = tim.heading() - 10
+    tim.setheading(new_angle)
+
 def erase():
     tim.clear()
     tim.penup()
     tim.home()
     tim.pendown()
 
-screen.onkey(move_upwards, "Up")
-screen.onkey(move_downwards, "Down")
-screen.onkey(move_right, "Right")
-screen.onkey(move_left, "Left")
+screen.onkey(move_forwards, "space")
+screen.onkey(move_backwards, "b")
+screen.onkey(turn_right, "Down")
+screen.onkey(turn_left, "Up")
 screen.onkey(erase, "c")
 screen.listen()
 screen.mainloop()
