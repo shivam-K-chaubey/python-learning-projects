@@ -53,3 +53,4 @@ else:
     hand.write(f"{winner.title()} Won, You Lose", align="center")
 print(winner)
 screen.mainloop()
+

@@ -1,4 +1,8 @@
 venv/
 .idea/
 __pycache__/
+<<<<<<< HEAD
 *.pyc
+=======
+*.pyc
+>>>>>>> dca45dfc9af0a2d1f6b88887d2fe8a444576cbac
